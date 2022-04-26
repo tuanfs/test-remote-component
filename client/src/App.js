@@ -16,14 +16,12 @@ function App() {
     }
     fetchPage()
   }, [])
-  console.log(pageList)
   return (
     <Router>
       <div className="App">
         <Routes>
           {pageList.length > 0 &&
             pageList.map((item, index) => {
-              console.log(item)
               return (
                 <Route
                   key={index}
