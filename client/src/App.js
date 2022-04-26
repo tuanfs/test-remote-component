@@ -2,31 +2,44 @@ import "./App.css"
 import RemoteComponent from "./RemoteComponent"
 import {useState, useEffect} from "react"
 import axios from "axios"
+import {BrowserRouter as Router, Routes, Route} from "react-router-dom"
 function App() {
   const [pageList, setPageList] = useState([])
-  console.log(pageList)
   useEffect(() => {
     const fetchPage = async () => {
-      const result = await axios.get("http://localhost:5500/api/page")
+      const result = await axios.get(
+        "https://protected-oasis-28404.herokuapp.com/api/page",
+      )
       if (result.data.success) {
         setPageList(result.data.pageList)
       }
     }
     fetchPage()
   }, [])
+  console.log(pageList)
   return (
-    <div className="App">
-      {pageList.length > 0 &&
-        pageList.map((item, index) => {
-          console.log(item)
-          return (
-            <RemoteComponent
-              sections={JSON.stringify(item.sections)}
-              path={item.path}
-            />
-          )
-        })}
-    </div>
+    <Router>
+      <div className="App">
+        <Routes>
+          {pageList.length > 0 &&
+            pageList.map((item, index) => {
+              console.log(item)
+              return (
+                <Route
+                  key={index}
+                  path={item.path}
+                  element={
+                    <RemoteComponent
+                      sections={JSON.stringify(item.sections)}
+                      path={item.path}
+                    />
+                  }
+                />
+              )
+            })}
+        </Routes>
+      </div>
+    </Router>
   )
 }
 

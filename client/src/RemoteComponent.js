@@ -12,7 +12,7 @@ const RemoteComponent = (props) => {
   if (err != null) {
     return <div>Unknown Error: {err.toString()}</div>
   }
-  console.log(props)
+
   return (
     <div>
       <Component {...props} />
